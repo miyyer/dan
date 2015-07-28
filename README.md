@@ -8,7 +8,7 @@ feel free to email me with any comments/problems/questions/suggestions at miyyer
 
 ### commands to run DAN on Stanford Sentiment Treebank:
 - bash run.sh (downloads word embeddings and dataset, preprocesses PTB trees into DAN format)
-- python dan_sentiment.py (can tweak hyperparameters via command-line arguments, currently this runs the fine-grained experiment on root-level labels only)
+- python dan_sentiment.py (can tweak hyperparameters via command-line arguments, currently this runs the fine-grained experiment on only root-level labels and should take a few minutes to finish training)
 - other sentiment experiments and QA code coming soon! 
 
 ### DAN input format (for your own data!):
