@@ -1,7 +1,7 @@
 # Deep Averaging Networks (DAN)
 code for model described in
 <http://cs.umd.edu/~miyyer/pubs/2015_acl_dan.pdf>. 
-feel free to email me with any comments/problems/questions at miyyer@umd.edu!
+feel free to email me with any comments/problems/questions/suggestions at miyyer@umd.edu!
 
 ### dependencies: 
 - python 2.7.9, numpy 1.9.2 (might work w/ other versions but not tested)
