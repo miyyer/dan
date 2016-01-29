@@ -1,7 +1,7 @@
 from numpy import *
-import cPickle, gzip
+import cPickle, zipfile
 
-vec_file = gzip.open('data/glove.840B.300d.txt.gz', 'r')
+vec_file = zipfile.ZipFile('../data/glove.840B.300d.zip', 'r').open('glove.840B.300d.txt', 'r')
 all_vocab = {}
 print 'loading vocab...'
 wmap = cPickle.load(open('../data/sentiment/wordMapAll.bin', 'rb'))
@@ -9,7 +9,7 @@ revMap = {}
 for word in wmap:
     revMap[wmap[word]] = word
 
-for line in vec_file:
+for line in vec_file.readlines():
     split = line.split()
     try:
         x = wmap[split[0]]
