@@ -4,7 +4,7 @@ code for model described in
 feel free to email me at miyyer@umd.edu with any comments/problems/questions/suggestions.
 
 ### dependencies: 
-- python 2.7.9, numpy 1.9.2 (might work w/ other versions but not tested)
+- python 2.7.9, numpy 1.9.2 (might work w/ other versions but not tested), nltk
 
 ### commands to run DAN on Stanford Sentiment Treebank:
 - bash run.sh (downloads word embeddings and dataset, preprocesses PTB trees into DAN format)
