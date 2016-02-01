@@ -9,7 +9,7 @@ revMap = {}
 for word in wmap:
     revMap[wmap[word]] = word
 
-for line in vec_file.readlines():
+for line in vec_file:
     split = line.split()
     try:
         x = wmap[split[0]]
