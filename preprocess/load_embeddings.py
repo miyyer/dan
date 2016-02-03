@@ -1,7 +1,7 @@
 from numpy import *
-import cPickle, gzip
+import cPickle, zipfile
 
-vec_file = gzip.open('data/glove.840B.300d.txt.gz', 'r')
+vec_file = zipfile.ZipFile('../data/glove.840B.300d.zip', 'r').open('glove.840B.300d.txt', 'r')
 all_vocab = {}
 print 'loading vocab...'
 wmap = cPickle.load(open('../data/sentiment/wordMapAll.bin', 'rb'))

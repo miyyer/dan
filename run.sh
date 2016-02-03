@@ -12,8 +12,8 @@ mv data/trees data/sentiment
 rm -f $loc
 
 # Get Glove 300d embeddings
-curl -O http://www-nlp.stanford.edu/data/glove.840B.300d.txt.gz
-mv glove.840B.300d.txt.gz data/
+curl -O http://www-nlp.stanford.edu/data/glove.840B.300d.zip
+mv glove.840B.300d.zip data/
 
 # Convert tree format
 cd preprocess
