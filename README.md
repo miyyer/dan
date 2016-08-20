@@ -11,7 +11,7 @@ feel free to email me at miyyer@umd.edu with any comments/problems/questions/sug
 - python dan_sentiment.py (can tweak hyperparameters via command-line arguments, currently this runs the fine-grained experiment on only root-level labels and should take a few minutes to finish training)
 
 ### QA DAN code available in the repository for our full quiz bowl system 
-- https://github.com/Pinafore/qb/blob/master/guesser/dan.py
+- https://github.com/Pinafore/qb/blob/master/qanta/guesser/dan.py
 
 ### DAN input format (for your own data!):
 - each training/test instance must be a tuple with the following format: ([list of word embedding lookup indices associated with text], label)
