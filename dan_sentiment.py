@@ -119,6 +119,11 @@ def objective_and_grad(data, params, d, dh, len_voc, deep, labels, f=relu, df=dr
                         grads[-1][:, curr_sent] += params[0].T.dot(delta).reshape((d, 1)) / len(curr_sent)
 
     for index in range(0, len(params)):
+
+        # don't regularize embeddings if finetune=false
+        if not fine_tune and index == len(params) - 1:
+            continue
+            
         error_sum += 0.5 * rho * sum(params[index] ** 2)
         grads[index] += rho * params[index]
 
