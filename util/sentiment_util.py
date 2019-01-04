@@ -1,5 +1,5 @@
 from numpy import *
-import cPickle
+import _pickle as cPickle
 
 def unroll_params(arr, d, dh, len_voc, deep=1, labels=2, wv=True):
 

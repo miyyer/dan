@@ -1,5 +1,5 @@
 from glob import glob
-import cPickle
+import _pickle as cPickle
 import random
 
 def compute_vocab():
@@ -14,6 +14,7 @@ def compute_vocab():
     for fold in [trneg, trpos, tneg, tpos]:
         fold_docs = []
         for fname in fold:
+            print(fname)
             doc = []
             f = open(fname, 'r')
             for line in f:
@@ -52,17 +53,16 @@ def compute_vocab():
             elif i == 3:
                 test.append((doc, 1))
 
-    print len(train), len(test)
+    print(len(train), len(test))
 
     random.shuffle(train)
     random.shuffle(test)
 
     for x in range(3000, 3020):
-        print i, train[x][1], ' '.join(vocab[x] for x in train[x][0])
-        print '\n'
+        print(i, train[x][1], ' '.join(vocab[x] for x in train[x][0]))
+        print('\n')
 
-    cPickle.dump([train, test, vocab, vdict], open('../data/aclimdb/imdb_splits', 'wb'),\
-        protocol=cPickle.HIGHEST_PROTOCOL)
+    cPickle.dump([train, test, vocab, vdict], open('../data/aclimdb/imdb_splits', 'wb'))
 
 
 

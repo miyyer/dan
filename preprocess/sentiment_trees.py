@@ -2,7 +2,7 @@
 # https://github.com/awni/semantic-rntn/blob/master/tree.py
 # credit to Awni Hannun
 
-import collections, cPickle
+import collections, _pickle as cPickle
 from nltk.corpus import stopwords
 from collections import Counter
 import string, sys
@@ -86,7 +86,7 @@ def mapWords(node,wordMap):
             node.word = wordMap[node.word]
 
 def loadWordMap():
-    import cPickle as pickle
+    import _pickle as pickle
     with open('wordMap.bin','r') as fid:
         return pickle.load(fid)
 
@@ -110,20 +110,20 @@ def buildWordMap():
     ddir = '../data/sentiment/'
 
     for file in [ddir + 'train.txt', ddir + 'dev.txt', ddir + 'test.txt']:
-        print "Reading trees.."
+        print("Reading trees..")
         with open(file,'r') as fid:
             trees = [Tree(l) for l in fid.readlines()]
 
-        print "Counting words.."
+        print("Counting words..")
         for tree in trees:
             leftTraverse(tree.root,nodeFn=countWords,args=words)
         
-        print len(words)
+        print(len(words))
 
-    wordMap = dict(zip(words.iterkeys(),xrange(len(words))))
+    wordMap = dict(zip(words.keys(), range(len(words))))
     wordMap[UNK] = len(words) # Add unknown as word
 
-    with open('../data/sentiment/wordMapAll.bin','w') as fid:
+    with open('../data/sentiment/wordMapAll.bin','wb') as fid:
         cPickle.dump(wordMap,fid)
 
     return wordMap
@@ -134,7 +134,7 @@ def loadTrees(dataSet='train', wmap=loadWordMap):
     """
     wordMap = wmap
     file = '../data/sentiment/%s.txt'%dataSet
-    print "Reading trees.."
+    print("Reading trees..")
     with open(file,'r') as fid:
         trees = [Tree(l) for l in fid.readlines()]
     for tree in trees:
@@ -152,8 +152,8 @@ def preprocess(sents, wmap, binary=False):
 def process_trees(wmap):
     for split in ['train', 'dev', 'test']:
         trees = loadTrees(dataSet=split, wmap=wmap)
-        print len(trees)
-        cPickle.dump(trees, open('../data/sentiment/' + split + '_alltrees', 'wb'), protocol=cPickle.HIGHEST_PROTOCOL)
+        print(len(trees))
+        cPickle.dump(trees, open('../data/sentiment/' + split + '_alltrees', 'wb'))
       
 
 def acquire_all_phrases(tree, phrases):
@@ -163,16 +163,16 @@ def acquire_all_phrases(tree, phrases):
 if __name__=='__main__':
 
     wmap = buildWordMap()
-    print 'num words: ', len(wmap)
+    print('num words: ', len(wmap))
     process_trees(wmap)
     train = cPickle.load(open('../data/sentiment/train_alltrees', 'rb'))
     dev = cPickle.load(open('../data/sentiment/dev_alltrees', 'rb'))
     test = cPickle.load(open('../data/sentiment/test_alltrees', 'rb'))
 
     revMap = {}
-    for k, v in wmap.iteritems():
+    for k, v in wmap.items():
         revMap[v] = k
-    print len(train), len(dev), len(test)
+    print(len(train), len(dev), len(test))
     
     # store train root labels
     t_sents = []
@@ -181,12 +181,12 @@ if __name__=='__main__':
         leftTraverse(tree.root,nodeFn=words_to_list,args=[sent,revMap])
         t_sents.append([sent, tree.root.label + 1])
 
-    print [revMap[x] for x in t_sents[0][0]]
-    print 'num train instances ', len(t_sents)
+    print([revMap[x] for x in t_sents[0][0]])
+    print('num train instances ', len(t_sents))
     c = Counter()
     for sent, label in t_sents:
         c[label] += 1
-    print c
+    print(c)
     cPickle.dump(t_sents, open('../data/sentiment/train-rootfine', 'wb'))
 
     # store both phrases and roots for dev / test
@@ -196,12 +196,12 @@ if __name__=='__main__':
         leftTraverse(tree.root,nodeFn=words_to_list,args=[sent,revMap])
         dev_sents.append([sent, tree.root.label + 1])
 
-    print [revMap[x] for x in dev_sents[0][0]]
-    print 'dev phrase length ', len(dev_sents)
+    print([revMap[x] for x in dev_sents[0][0]])
+    print('dev phrase length ', len(dev_sents))
     c = Counter()
     for sent, label in dev_sents:
         c[label] += 1
-    print c
+    print(c)
     cPickle.dump(dev_sents, open('../data/sentiment/dev-rootfine', 'wb'))
 
     test_sents = []
@@ -210,10 +210,10 @@ if __name__=='__main__':
         leftTraverse(tree.root,nodeFn=words_to_list,args=[sent,revMap])
         test_sents.append([sent, tree.root.label + 1])
                  
-    print [revMap[x] for x in test_sents[0][0]]
-    print 'test phrase length ', len(test_sents)
+    print([revMap[x] for x in test_sents[0][0]])
+    print('test phrase length ', len(test_sents))
     c = Counter()
     for sent, label in test_sents:
         c[label] += 1
-    print c
+    print(c)
     cPickle.dump(test_sents, open('../data/sentiment/test-rootfine', 'wb'))
