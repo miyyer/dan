@@ -2,7 +2,8 @@ from numpy import *
 from util.sentiment_util import *
 from util.math_util import *
 from util.adagrad import Adagrad
-import cPickle, time, argparse
+import time, argparse
+import _pickle as cPickle
 from collections import Counter
 
 # compute model accuracy on a given fold
@@ -38,7 +39,7 @@ def validate(data, fold, params, deep, f=relu):
 
         total += 1
 
-    print 'accuracy on ', fold, correct, total, str(correct / total), '\n'
+    print('accuracy on ',fold,int(correct),int(total), round(correct / total, 2), '\n')
     return correct / total
 
 # does both forward and backprop
@@ -180,13 +181,13 @@ if __name__ == '__main__':
         for sent, label in split:
             c[label] += 1
             tot += 1
-        print c, tot
+        print(c, tot)
 
     if args['rand_We']:
-        print 'randomly initializing word embeddings...'
+        print('randomly initializing word embeddings...')
         orig_We = (random.rand(d, len_voc) * 2 - 1) * 0.08
     else:
-        print 'loading pretrained word embeddings...'
+        print('loading pretrained word embeddings...')
         orig_We = cPickle.load(open(args['We'], 'rb'))
 
     # output log and parameter file destinations
@@ -201,7 +202,7 @@ if __name__ == '__main__':
     r = roll_params(params)
 
     dim = r.shape[0]
-    print 'parameter vector dimensionality:', dim
+    print('parameter vector dimensionality:', dim)
 
     log = open(log_file, 'w')
 
@@ -215,7 +216,7 @@ if __name__ == '__main__':
 
         # create mini-batches
         random.shuffle(train)
-        batches = [train[x : x + args['batch_size']] for x in xrange(0, len(train), 
+        batches = [train[x : x + args['batch_size']] for x in range(0, len(train),
                    args['batch_size'])]
 
         epoch_error = 0.0
@@ -235,8 +236,8 @@ if __name__ == '__main__':
             epoch_error += err
 
         # done with epoch
-        print time.time() - ep_t
-        print 'done with epoch ', epoch, ' epoch error = ', epoch_error, ' min error = ', min_error
+        print(time.time() - ep_t)
+        print('done with epoch ', epoch, ' epoch error = ', epoch_error, ' min error = ', min_error)
         lstring = 'done with epoch ' + str(epoch) + ' epoch error = ' + str(epoch_error) \
                  + ' min error = ' + str(min_error) + '\n'
         log.write(lstring)

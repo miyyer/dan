@@ -1,3 +1,4 @@
 data/
 models/
 *.pyc
+.idea/
